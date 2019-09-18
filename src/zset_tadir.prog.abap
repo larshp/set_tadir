@@ -22,11 +22,11 @@ TYPE-POOLS:
 TYPES: BEGIN OF gty_alv.
         INCLUDE STRUCTURE tadir.
 TYPES:
-         icon(4),
-         style   TYPE lvc_t_styl,
-         color   TYPE slis_t_specialcol_alv,
-         mark,
-       END OF gty_alv,
+  icon(4),
+  style   TYPE lvc_t_styl,
+  color   TYPE slis_t_specialcol_alv,
+  mark,
+  END OF gty_alv,
   gty_t_alv TYPE STANDARD TABLE OF gty_alv.
 
 
@@ -45,18 +45,18 @@ SELECTION-SCREEN END   OF BLOCK b1.
 CLASS lcl_appl DEFINITION.
   PUBLIC SECTION.
     DATA:
-          mt_data              TYPE STANDARD TABLE OF gty_alv,
-          mt_data_old          TYPE STANDARD TABLE OF gty_alv,
-          mt_list_top_of_page  TYPE slis_t_listheader,
-          mt_fieldcat          TYPE lvc_t_fcat,
-          mv_anzahl            TYPE i,
-          mv_callback_programm TYPE sy-repid,
-          mv_repid             TYPE syrepid,
-          mv_variant_save      TYPE c,
-          ms_vbak              TYPE vbak,
-          ms_data              TYPE gty_alv,
-          ms_variant           TYPE disvariant,
-          ms_grid_scroll       TYPE lvc_s_scrl.
+      mt_data              TYPE STANDARD TABLE OF gty_alv,
+      mt_data_old          TYPE STANDARD TABLE OF gty_alv,
+      mt_list_top_of_page  TYPE slis_t_listheader,
+      mt_fieldcat          TYPE lvc_t_fcat,
+      mv_anzahl            TYPE i,
+      mv_callback_programm TYPE sy-repid,
+      mv_repid             TYPE syrepid,
+      mv_variant_save      TYPE c,
+      ms_vbak              TYPE vbak,
+      ms_data              TYPE gty_alv,
+      ms_variant           TYPE disvariant,
+      ms_grid_scroll       TYPE lvc_s_scrl.
 
     METHODS:
       init,
@@ -71,7 +71,8 @@ CLASS lcl_appl DEFINITION.
         CHANGING
           cs_selfield TYPE slis_selfield
           cv_okcode   TYPE syucomm,
-      display.
+      display,
+      do_nothing.
 
   PRIVATE SECTION.
     METHODS:
@@ -247,8 +248,8 @@ CLASS lcl_appl IMPLEMENTATION.
 
   METHOD get_data.
     DATA:
-          lt_data TYPE STANDARD TABLE OF tadir,
-          ls_data TYPE tadir.
+      lt_data TYPE STANDARD TABLE OF tadir,
+      ls_data TYPE tadir.
 
     CLEAR mt_data.
 
@@ -283,25 +284,25 @@ CLASS lcl_appl IMPLEMENTATION.
 
   METHOD display.
     CONSTANTS:
-               lc_pf_status         TYPE slis_formname VALUE 'ALV_STATUS',
-               lc_user_command      TYPE slis_formname VALUE 'ALV_COMMAND',
-               lc_internal_tab_name TYPE slis_tabname  VALUE 'MT_DATA',
-               lc_structure_name    TYPE dd02l-tabname VALUE 'TADIR',
-               lc_data_changed      TYPE slis_formname VALUE 'ALV_DATA_CHANGED',
-               lc_top_of_page       TYPE slis_formname VALUE 'ALV_TOP_OF_PAGE',
-               lc_field_mark        TYPE slis_layout_alv-box_fieldname VALUE 'MARK',
-               lc_field_style       TYPE slis_layout_alv-box_fieldname VALUE 'STYLE',
-               lc_field_color       TYPE slis_layout_alv-box_fieldname VALUE 'COLOR'.
+      lc_pf_status         TYPE slis_formname VALUE 'ALV_STATUS',
+      lc_user_command      TYPE slis_formname VALUE 'ALV_COMMAND',
+      lc_internal_tab_name TYPE slis_tabname  VALUE 'MT_DATA',
+      lc_structure_name    TYPE dd02l-tabname VALUE 'TADIR',
+      lc_data_changed      TYPE slis_formname VALUE 'ALV_DATA_CHANGED',
+      lc_top_of_page       TYPE slis_formname VALUE 'ALV_TOP_OF_PAGE',
+      lc_field_mark        TYPE slis_layout_alv-box_fieldname VALUE 'MARK',
+      lc_field_style       TYPE slis_layout_alv-box_fieldname VALUE 'STYLE',
+      lc_field_color       TYPE slis_layout_alv-box_fieldname VALUE 'COLOR'.
 
     DATA:
-          lt_excluding     TYPE slis_t_extab,
-          lt_events        TYPE slis_t_event,
-          lt_list_sort     TYPE lvc_t_sort,
-          ls_sort          TYPE lvc_s_sort,
-          ls_layout        TYPE lvc_s_layo,
-          ls_fieldcat      TYPE lvc_s_fcat,
-          ls_grid_settings TYPE lvc_s_glay,
-          ls_event         TYPE slis_alv_event.
+      lt_excluding     TYPE slis_t_extab,
+      lt_events        TYPE slis_t_event,
+      lt_list_sort     TYPE lvc_t_sort,
+      ls_sort          TYPE lvc_s_sort,
+      ls_layout        TYPE lvc_s_layo,
+      ls_fieldcat      TYPE lvc_s_fcat,
+      ls_grid_settings TYPE lvc_s_glay,
+      ls_event         TYPE slis_alv_event.
 
     FIELD-SYMBOLS:
                    <lf_fcat> TYPE lvc_s_fcat.
@@ -414,12 +415,16 @@ CLASS lcl_appl IMPLEMENTATION.
 
   ENDMETHOD.
 
+  METHOD do_nothing.
+    "nothing to do
+  ENDMETHOD.
+
   METHOD set_top_of_page.
     DATA:
-          ls_style     TYPE lvc_s_styl,
-          ls_line      TYPE slis_listheader,
-          lv_text(50),
-          lv_line(100).
+      ls_style     TYPE lvc_s_styl,
+      ls_line      TYPE slis_listheader,
+      lv_text(50),
+      lv_line(100).
 
     IMPORT mv_anzahl TO mv_anzahl FROM MEMORY ID sy-repid.
     WRITE mv_anzahl TO lv_text.
@@ -443,8 +448,8 @@ CLASS lcl_appl IMPLEMENTATION.
           ls_style     TYPE lvc_s_styl.
 
     FIELD-SYMBOLS:
-                   <lf_fcat> TYPE lvc_s_fcat,
-                   <lf_data> TYPE gty_alv.
+      <lf_fcat> TYPE lvc_s_fcat,
+      <lf_data> TYPE gty_alv.
 
 *   EDIT-Felder einstellen
     SORT mt_fieldcat BY fieldname.
@@ -473,7 +478,7 @@ CLASS lcl_appl IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD handle_fcode.
-    DATA ls_data TYPE gty_alv.                                                 "#EC NEEDED
+    DATA ls_data TYPE gty_alv.                              "#EC NEEDED
 
     IF cs_selfield-tabindex > 0.
       READ TABLE mt_data INTO ls_data INDEX cs_selfield-tabindex.
@@ -498,9 +503,9 @@ CLASS lcl_appl IMPLEMENTATION.
 
   METHOD save.
     DATA:
-          lv_anz       TYPE i,
-          lv_anz_c     TYPE char10,
-          ls_tadir_new TYPE tadir.
+      lv_anz       TYPE i,
+      lv_anz_c     TYPE char10,
+      ls_tadir_new TYPE tadir.
 
     LOOP AT mt_data INTO ms_data.
 
@@ -534,10 +539,10 @@ CLASS lcl_appl IMPLEMENTATION.
 
   METHOD set_target_system.
     DATA:
-          lv_srcsystem  TYPE tadir-srcsystem,
-          lv_retcodepop TYPE char1,
-          ls_field      TYPE sval,
-          lt_fields     TYPE STANDARD TABLE OF sval.
+      lv_srcsystem  TYPE tadir-srcsystem,
+      lv_retcodepop TYPE char1,
+      ls_field      TYPE sval,
+      lt_fields     TYPE STANDARD TABLE OF sval.
 
     FIELD-SYMBOLS
      <lf_data> LIKE LINE OF mt_data.
@@ -605,7 +610,7 @@ START-OF-SELECTION.
 *&---------------------------------------------------------------------*
 *&      Form  alv40_status
 *&---------------------------------------------------------------------*
-FORM alv_status USING rt_extab TYPE slis_t_extab.                              "#EC CALLED
+FORM alv_status USING rt_extab TYPE slis_t_extab.           "#EC CALLED
   go_appl->set_status( CHANGING ct_excl = rt_extab ).
 ENDFORM.                                                                       "alv_status
 
@@ -613,7 +618,7 @@ ENDFORM.                                                                       "
 *&      Form  alv50_command
 *&---------------------------------------------------------------------*
 FORM alv_command USING rv_ucomm    TYPE sy-ucomm
-                       rs_selfield TYPE slis_selfield.                         "#EC CALLED
+                       rs_selfield TYPE slis_selfield.      "#EC CALLED
   go_appl->handle_fcode( CHANGING cs_selfield = rs_selfield
                                   cv_okcode   = rv_ucomm ).
 ENDFORM.                                                                       "alv_command
@@ -621,7 +626,7 @@ ENDFORM.                                                                       "
 *&---------------------------------------------------------------------*
 *&      Form  alv90_top_of_page
 *&---------------------------------------------------------------------*
-FORM alv_top_of_page.                                                          "#EC CALLED
+FORM alv_top_of_page.                                       "#EC CALLED
   CALL FUNCTION 'REUSE_ALV_COMMENTARY_WRITE'
     EXPORTING
       i_logo             = 'Z_LOGO_SMURFIT_KAPPA'
